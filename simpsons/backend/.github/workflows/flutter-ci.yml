@@ -21,27 +21,32 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get # Installe les dépendances du projet
+        working-directory: simpsons
 
       - name: Analyze code
         run: flutter analyze # Analyse le code pour détecter les problèmes
+        working-directory: simpsons
 
       - name: Run tests
         run: flutter test # Exécute les tests unitaires
+        working-directory: simpsons
 
       - name: Build APK
         run: flutter build apk --release # Compile l'application Flutter en APK
+        working-directory: simpsons
 
       - name: Upload APK Artifact # Version APK
         uses: actions/upload-artifact@v4
         with:
           name: release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: simpsons/build/app/outputs/flutter-apk/app-release.apk
 
       - name: Build Web # Compile l'application Flutter pour le web
         run: flutter build web --release
+        working-directory: simpsons
 
       - name: Upload Web Artifact
         uses: actions/upload-artifact@v4
         with:
           name: release-web
-          path: build/web
+          path: simpsons/build/web
