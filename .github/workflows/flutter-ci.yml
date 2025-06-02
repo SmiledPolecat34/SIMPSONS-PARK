@@ -16,18 +16,19 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2.12.0 # Installe Flutter
         with:
-          flutter-version: '3.19.6'
+          flutter-version: '3.22.1'
 
-      - name: Install dependencies
-        run: flutter pub get && flutter clean && flutter pub get && flutter pub outdated && flutter pub upgrade --major-versions # Installe les dépendances du projet et met à jour les paquets obsolètes
+      - name: Installation des dépendances
         working-directory: simpsons
-        
+        run: |
+          flutter clean
+          flutter pub get
 
-      - name: Analyze project source
+      - name: Analyse du code source
         run: flutter analyze # Analyse le code source du projet pour détecter les problèmes
         working-directory: simpsons
 
-      - name: Run tests
+      - name: Exécution des tests
         run: flutter test # Exécute les tests unitaires du projet
         working-directory: simpsons
 
