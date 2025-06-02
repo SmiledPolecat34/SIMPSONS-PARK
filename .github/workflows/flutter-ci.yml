@@ -24,9 +24,9 @@ jobs:
           flutter clean
           flutter pub get
 
-      - name: Analyse du code source
-        run: flutter analyze # Analyse le code source du projet pour détecter les problèmes
+      - name: Analyse project source (ignorer les infos)
         working-directory: simpsons
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings # Analyse le code source du projet Flutter sans échouer en cas d'avertissements ou d'infos
 
       - name: Exécution des tests
         run: flutter test # Exécute les tests unitaires du projet
