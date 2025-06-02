@@ -2,50 +2,50 @@ name: Flutter CI
 
 on:
   push:
-    branches: [ main ] # Pousse sur la branche principale
+    branches: [ main ]
   pull_request:
-    branches: [ main ] # Demande de tirage vers la branche principale
+    branches: [ main ]
 
 jobs:
   build:
-    runs-on: ubuntu-latest # Utilise la dernière version d'Ubuntu
+    runs-on: ubuntu-latest
 
-        steps:
-      - uses: actions/checkout@v4 # Vérifie le code source du dépôt
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2 # Installe Flutter
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.19.6'
 
       - name: Install dependencies
-        run: flutter pub get # Installe les dépendances du projet
+        run: flutter pub get
         working-directory: simpsons
 
       - name: Analyze project source
-        run: flutter analyze # Analyse le code source pour détecter les problèmes
+        run: flutter analyze
         working-directory: simpsons
 
       - name: Run tests
-        run: flutter test # Exécute les tests unitaires
+        run: flutter test
         working-directory: simpsons
 
       - name: Build APK
-        run: flutter build apk --release # Compile l'application pour Android
+        run: flutter build apk --release
         working-directory: simpsons
 
       - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4 # Télécharge l'APK compilé en tant qu'artéfact
+        uses: actions/upload-artifact@v4
         with:
           name: release-apk
           path: simpsons/build/app/outputs/flutter-apk/app-release.apk
 
       - name: Build Web
-        run: flutter build web --release # Compile l'application pour le web
+        run: flutter build web --release
         working-directory: simpsons
 
       - name: Upload Web Artifact
-        uses: actions/upload-artifact@v4 # Télécharge la version web compilée en tant qu'artéfact
+        uses: actions/upload-artifact@v4
         with:
           name: release-web
           path: simpsons/build/web
