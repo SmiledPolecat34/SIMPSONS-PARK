@@ -1,0 +1,47 @@
+name: Flutter CI
+
+on:
+  push:
+    branches: [ main ] # Pousse sur la branche principale
+  pull_request:
+    branches: [ main ] # Demande de tirage vers la branche principale
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Utilise la dernière version d'Ubuntu
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3 # Récupère le code du dépôt
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2 # Installe Flutter
+        with:
+          flutter-version: '3.19.6'
+
+      - name: Install dependencies
+        run: flutter pub get # Installe les dépendances du projet
+
+      - name: Analyze code
+        run: flutter analyze # Analyse le code pour détecter les problèmes
+
+      - name: Run tests
+        run: flutter test # Exécute les tests unitaires
+
+      - name: Build APK
+        run: flutter build apk --release # Compile l'application Flutter en APK
+
+      - name: Upload APK Artifact # Version APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Build Web # Compile l'application Flutter pour le web
+        run: flutter build web --release
+
+      - name: Upload Web Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-web
+          path: build/web
