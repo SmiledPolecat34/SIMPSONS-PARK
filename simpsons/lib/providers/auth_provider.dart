@@ -3,8 +3,14 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../services/auth_service.dart';
 
 class AuthProvider extends ChangeNotifier {
-  final AuthService _auth = AuthService();
-  final _storage = const FlutterSecureStorage();
+  final AuthService _auth;
+  final FlutterSecureStorage _storage;
+
+  AuthProvider({
+    AuthService? authService,
+    FlutterSecureStorage? storage,
+  })  : _auth = authService ?? AuthService(),
+        _storage = storage ?? const FlutterSecureStorage();
 
   bool _isAuth = false;
   bool get isAuthenticated => _isAuth;

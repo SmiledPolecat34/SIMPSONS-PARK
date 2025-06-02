@@ -2,50 +2,50 @@ name: Flutter CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main ] # Cela déclenche le workflow sur les push vers la branche principale
   pull_request:
-    branches: [ main ]
+    branches: [ main ] # Cela déclenche le workflow sur les pull requests vers la branche principale
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # Utilise la dernière version d'Ubuntu pour exécuter les jobs
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4 # Vérifie le code source du dépôt
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2.12.0
+        uses: subosito/flutter-action@v2.12.0 # Installe Flutter
         with:
           flutter-version: '3.19.6'
 
       - name: Install dependencies
-        run: flutter pub get
+        run: flutter pub get # Installe les dépendances du projet Flutter
         working-directory: simpsons
 
       - name: Analyze project source
-        run: flutter analyze
+        run: flutter analyze # Analyse le code source du projet pour détecter les problèmes
         working-directory: simpsons
 
       - name: Run tests
-        run: flutter test
+        run: flutter test # Exécute les tests unitaires du projet
         working-directory: simpsons
 
       - name: Build APK
-        run: flutter build apk --release
+        run: flutter build apk --release # Compile l'application Flutter pour Android en mode release
         working-directory: simpsons
 
       - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4 # Télécharge l'APK compilé en tant qu'artéfact
         with:
           name: release-apk
           path: simpsons/build/app/outputs/flutter-apk/app-release.apk
 
       - name: Build Web
-        run: flutter build web --release
+        run: flutter build web --release # Compile l'application Flutter pour le web en mode release
         working-directory: simpsons
 
       - name: Upload Web Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4 # Télécharge les fichiers compilés pour le web en tant qu'artéfact
         with:
           name: release-web
           path: simpsons/build/web
