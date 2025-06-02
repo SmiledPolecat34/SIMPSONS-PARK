@@ -31,23 +31,3 @@ jobs:
       - name: Exécution des tests
         run: flutter test # Exécute les tests unitaires du projet
         working-directory: simpsons
-
-      - name: Build APK
-        run: flutter build apk --release # Compile l'application Flutter pour Android en mode release
-        working-directory: simpsons
-
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4 # Télécharge l'APK compilé en tant qu'artéfact
-        with:
-          name: release-apk
-          path: simpsons/build/app/outputs/flutter-apk/app-release.apk
-
-      - name: Build Web
-        run: flutter build web --release # Compile l'application Flutter pour le web en mode release
-        working-directory: simpsons
-
-      - name: Upload Web Artifact
-        uses: actions/upload-artifact@v4 # Télécharge les fichiers compilés pour le web en tant qu'artéfact
-        with:
-          name: release-web
-          path: simpsons/build/web
